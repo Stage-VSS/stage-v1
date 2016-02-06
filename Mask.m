@@ -89,6 +89,17 @@ classdef Mask < handle
             mask = Mask(aperture);
         end
         
+        % Circular annulus shaped mask 
+        function mask = createAnnulusMask(insideDiameter, outsideDiameter, resolution)
+            if nargin < 3
+                resolution = 512;
+            end
+            distanceMatrix = createDistanceMatrix(resolution);
+            tempMask = (distanceMatrix > insideDiameter & distanceMatrix < outsideDiameter);
+            aperture = uint8(tempMask * 255);
+            mask = Mask(aperture);
+        end
+        
     end
     
 end
